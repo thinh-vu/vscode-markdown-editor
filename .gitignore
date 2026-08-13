@@ -1,5 +1,5 @@
-*.vsix
 .DS_Store
+*.vsix
 
 # Logs
 logs

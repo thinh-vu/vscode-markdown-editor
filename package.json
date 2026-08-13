@@ -2,7 +2,7 @@
   "name": "obsidian-markdown-live-editor",
   "displayName": "Obsidian-style Markdown Editor",
   "description": "A seamless, Obsidian-like Markdown editor for VS Code",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "license": "GPL-3.0",
   "keywords": [
     "markdown",
@@ -117,7 +117,11 @@
       },
       {
         "command": "markdown-live.toggleItalic",
-        "title": "Markdown Live: Italic"
+        "title": "Markdown Live: Toggle Italic"
+      },
+      {
+        "command": "markdown-live.insertTemplate",
+        "title": "Markdown Live: Insert Template"
       }
     ],
     "keybindings": [
@@ -216,6 +220,11 @@
         "key": "ctrl+i",
         "mac": "cmd+i",
         "when": "activeCustomEditorId == 'markdownLive.editor'"
+      },
+      {
+        "command": "markdown-live.insertTemplate",
+        "key": "ctrl+shift+e",
+        "mac": "cmd+shift+e"
       }
     ],
     "configuration": {
@@ -231,16 +240,6 @@
           "default": "en",
           "description": "UI language for the Markdown Live Editor (en/vi)"
         },
-        "markdownLive.imageDirectory": {
-          "type": "string",
-          "default": "assets/images",
-          "description": "Directory to store images when pasted (e.g., assets/images)"
-        },
-        "markdownLive.imagePublicPath": {
-          "type": "string",
-          "default": "",
-          "description": "Prefix applied to absolute image paths (starting with '/') in your Markdown. Example: if your image is `![Alt](/images/foo.png)` but the actual file is at `public/images/foo.png`, set this to `public`. Leave empty to resolve directly from the workspace root."
-        },
         "markdownLive.fontFamily": {
           "type": "string",
           "enum": [
@@ -254,6 +253,21 @@
           "type": "boolean",
           "default": true,
           "description": "Enable or disable the '/' slash command menu in the editor."
+        },
+        "markdownLive.templateFolder": {
+          "type": "string",
+          "default": "",
+          "description": "Relative path from the workspace root to your templates folder (e.g., 'templates' or '.vscode/templates'). Leave empty to disable."
+        },
+        "markdownLive.imageDirectory": {
+          "type": "string",
+          "default": "assets/images",
+          "description": "Directory to store images when pasted (e.g., assets/images)"
+        },
+        "markdownLive.imagePublicPath": {
+          "type": "string",
+          "default": "",
+          "description": "Prefix applied to absolute image paths (starting with '/') in your Markdown. Example: if your image is `![Alt](/images/foo.png)` but the actual file is at `public/images/foo.png`, set this to `public`. Leave empty to resolve directly from the workspace root."
         }
       }
     }
@@ -263,14 +277,15 @@
     "compile": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=browser",
     "watch": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=browser --watch",
     "package": "npm run compile-webview && npm run compile",
-    "compile-webview": "esbuild ./webview/main.ts --bundle --outfile=dist/webview.js --platform=browser --minify",
-    "watch-webview": "esbuild ./webview/main.ts --bundle --outfile=dist/webview.js --platform=browser --watch",
+    "compile-webview": "esbuild ./webview/main.ts --bundle --outfile=dist/webview.js --platform=browser --minify --loader:.woff2=dataurl --loader:.woff=dataurl --loader:.ttf=dataurl",
+    "watch-webview": "esbuild ./webview/main.ts --bundle --outfile=dist/webview.js --platform=browser --watch --loader:.woff2=dataurl --loader:.woff=dataurl --loader:.ttf=dataurl",
     "lint": "eslint \"{src,webview}/**/*.ts\"",
     "format": "prettier --write \"{src,webview}/**/*.ts\"",
     "test": "tsc -p tsconfig.test.json && vscode-test-web --browserType=chromium --extensionDevelopmentPath=."
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/katex": "^0.16.8",
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.2.0",
     "@types/vscode": "^1.85.0",
@@ -298,6 +313,7 @@
     "@milkdown/plugin-diagram": "^7.7.0",
     "@milkdown/plugin-history": "^7.3.5",
     "@milkdown/plugin-listener": "^7.22.0",
+    "@milkdown/plugin-math": "^7.5.9",
     "@milkdown/plugin-prism": "^7.22.0",
     "@milkdown/plugin-slash": "^7.22.0",
     "@milkdown/preset-commonmark": "^7.3.5",
@@ -306,8 +322,10 @@
     "@milkdown/theme-nord": "^7.3.5",
     "@milkdown/utils": "^7.22.0",
     "codemirror": "^6.0.2",
+    "katex": "^0.18.4",
     "mermaid": "^11.16.1",
     "prism-themes": "^1.9.0",
-    "remark-frontmatter": "^5.0.0"
+    "remark-frontmatter": "^5.0.0",
+    "remark-math": "^6.0.0"
   }
 }

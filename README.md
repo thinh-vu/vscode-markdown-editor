@@ -1,6 +1,6 @@
 # Markdown Live Editor
 
-[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/vnstock.obsidian-markdown-live-editor.svg?label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=vnstock.obsidian-markdown-live-editor\&ssr=false#overview)
+[![VS Code Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/vnstock.obsidian-markdown-live-editor?label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=vnstock.obsidian-markdown-live-editor)
 [![Open VSX](https://img.shields.io/open-vsx/v/vnstock/obsidian-markdown-live-editor.svg?label=Open%20VSX)](https://open-vsx.org/extension/vnstock/obsidian-markdown-live-editor)
 [![GitHub issues](https://img.shields.io/github/issues/thinh-vu/vscode-markdown-editor.svg)](https://github.com/thinh-vu/vscode-markdown-editor/issues)
 [![GitHub stars](https://img.shields.io/github/stars/thinh-vu/vscode-markdown-editor.svg)](https://github.com/thinh-vu/vscode-markdown-editor/stargazers)
@@ -11,48 +11,97 @@ A seamless, Obsidian-like Markdown WYSIWYG editor built natively for VS Code / A
 
 ## ✨ Features
 
+### 🌟 Killer Features
+
+* **Obsidian Experience Without the Vault Overhead**: Enjoy the frictionless, elegant writing experience of Obsidian directly inside VS Code. No need to create heavy vaults or complex setups just to edit a project README or documentation. One editor to rule your code and docs!
 * **True WYSIWYG & Blazing Fast Performance**: Experience lightning-fast, buttery-smooth Markdown editing without the clunky split-screen. Thanks to a highly optimized, web-first architecture, the extension loads instantly and performs flawlessly even in pure web environments like `vscode.dev`.
+* **Zero-Lag Dual-Mode Synchronization**: Switch instantly between the rich Live Editor and a robust Source Mode powered by CodeMirror 6. Unlike other editors that claim to sync but suffer from intense lag or erratic cursor jumps, our editor delivers a rock-solid, buttery-smooth sync that accurately preserves your precise cursor position during real-time typing and DOM updates.
 
-* **Rock-Solid Cursor Stability**: Unlike many other Markdown previewers, our live editor accurately preserves your precise cursor position during real-time typing and DOM updates. Say goodbye to annoying cursor jumps or snapping to the bottom of the document.
+  <details>
+  <summary>📸 View Source Mode Editing</summary>
 
-* **Auto-Save Functionality**: Never lose your thoughts. Your notes are automatically and reliably saved as you write.
+  ![Source Mode Editing](https://vnstocks.com/images/markdown-live-editor/code-view.png)
 
-* **Advanced Table Operations**: Managing Markdown tables has never been easier. Use the intuitive right-click context menu to effortlessly add or remove rows and columns, delete tables, or instantly insert custom tables with your desired dimensions directly from the toolbar.
+  </details>
+* **Slash Commands & Dynamic Templates**: Type `/` to instantly access a sleek quick-insert menu enriched with premium Lucide icons. Ditch clunky JSON snippets by configuring a local folder of your own Markdown templates and seamlessly inserting them into your current document using the Slash command or keyboard shortcuts (`Cmd/Ctrl + Shift + E`).
+
+  <details>
+  <summary>📸 View Slash Commands</summary>
+
+  ![Slash Commands](https://vnstocks.com/images/markdown-live-editor/slash-commands.png)
+
+  </details>
+* **Smart Asset & Media Management**:
+
+  * **Auto-Paste**: Automatically save attached images to a customizable local directory when pasting directly into the editor.
+  * **Smart Deletion**: When you delete a markdown file, the editor intelligently asks if you want to clean up its attached images and assets to prevent system junk!
+  * **Auto-resolve**: Effortlessly resolves absolute image paths by prefixing them in the preview (e.g. for a Next.js `public` directory), keeping your raw Markdown code clean and portable. You can also rename images effortlessly via the context menu.
+
+  <details>
+  <summary>📸 View Media Management</summary>
+
+  ![Image Pasting Configuration](https://vnstocks.com/images/markdown-live-editor/public-image-path.png)
+  ![Image Rename Context Menu](https://vnstocks.com/images/markdown-live-editor/trigger-image-file-rename.png)
+
+  </details>
+
+### ✨ Quality of Life & Extended Syntax
+
+**Navigation & Organization**
+
+* **Dynamic Flyout Outline**: A beautifully animated hierarchical outline navigation on the right edge. It expands gracefully to reveal full text when hovered, keeping your workspace clean.
+
+  <details>
+  <summary>📸 View Flyout Outline</summary>
+
+  ![Article Outline Navigation](https://vnstocks.com/images/markdown-live-editor/article-outline.png)
+  ![Flyout Outline Interface](https://vnstocks.com/images/markdown-live-editor/flyout-outline.png)
+
+  </details>
+* **YAML Frontmatter & Metadata**: Built-in parsing for YAML metadata (like Obsidian). Offers an elegant, collapsible UI to edit document properties without cluttering your writing.
+
+  <details>
+  <summary>📸 View Metadata & Footnotes</summary>
+
+  ![Features Overview](https://vnstocks.com/images/markdown-live-editor/document-features.png)
+
+  </details>
+* **Smart Wikilinks**: Type `[[` to trigger a file search dialog, instantly converting selections into standard relative Markdown links or image embeds.
+
+  <details>
+  <summary>📸 View Smart Wikilinks</summary>
+
+  ![Wikilink Support](https://vnstocks.com/images/markdown-live-editor/wikilink.png)
+
+  </details>
+
+**Extended Markdown Syntax**
+
+* **Advanced Tables**: Manage Markdown tables effortlessly via an intuitive right-click context menu to add/remove rows/columns, or insert custom dimensions directly from the toolbar.
+
+<details>
+  <summary>📸 View Context Menu for Table Editting</summary>
 
 ![Table Context Menu](https://vnstocks.com/images/markdown-live-editor/table-context-menu.png)
 
-* **Comprehensive Interactive Toolbar**: A sleek, sticky toolbar packed with essential formatting tools. Instantly apply Bold, Italic, Strikethrough, Headings, Blockquotes, Code Blocks, Ordered/Unordered Lists, Links, Images, and Tables with a single click.
+  </details>
 
-![Interactive Toolbar](https://vnstocks.com/images/markdown-live-editor/toolbar.png)
+* **Mermaid & HTML Rendering**: Natively render complex Mermaid charts/diagrams on the fly and support custom inline HTML blocks for ultimate flexibility.
+* **GitHub-Flavored Elements**: Native support for GFM, admonitions (beautiful rich-text alerts for Notes, Tips, Warnings, Cautions, and Important callouts), footnotes, and elegant hashtag rendering (`#tag`).
 
-* **Dual-Mode Editing**: Switch instantly between the rich Live Editor and a robust Source Mode powered by CodeMirror 6, fully synchronized with your active VS Code theme.
+**Frictionless UX**
 
-![Source Mode Editing](https://vnstocks.com/images/markdown-live-editor/code-view.png)
+* **Comprehensive Interactive Toolbar**: A sleek, sticky toolbar packed with essential formatting tools. Instantly apply formatting with a single click.
 
-* **Smart Image Pasting**: Automatically save attached images to a customizable local directory when pasting directly into the editor. It automatically resolves absolute image paths by prefixing them in the preview (e.g. for a Next.js `public` directory), keeping your raw Markdown code clean and portable. You can also rename images effortlessly via the context menu.
+  <details>
+  <summary>📸 View Toolbar</summary>
 
-![Image Pasting Configuration](https://vnstocks.com/images/markdown-live-editor/public-image-path.png)
-![Image Rename Context Menu](https://vnstocks.com/images/markdown-live-editor/trigger-image-file-rename.png)
+  ![Interactive Toolbar](https://vnstocks.com/images/markdown-live-editor/toolbar.png)
 
-* **Mermaid Diagram Support**: Natively render complex Mermaid charts and diagrams on the fly.
-* **Dynamic Flyout Outline**: A beautifully animated hierarchical outline navigation on the right edge. It displays minimal heading level indicators by default and expands gracefully to reveal full text when hovered, keeping your workspace clean.
-
-![Article Outline Navigation](https://vnstocks.com/images/markdown-live-editor/article-outline.png)
-![Flyout Outline Interface](https://vnstocks.com/images/markdown-live-editor/flyout-outline.png)
-
-* **Slash Commands**: Type `/` to instantly access a sleek quick-insert menu enriched with premium Lucide icons.
-  ![Slash Commands](https://vnstocks.com/images/markdown-live-editor/slash-commands.png)
-* **Comprehensive Keyboard Shortcuts**: Empower your workflow with a wide array of keyboard shortcuts for all common Markdown formatting tasks.
-* **Rich Elements Support**: Native support for Markdown tables, GitHub-flavored Markdown (GFM), admonitions, and interactive task lists.
-* **Smart Wikilinks**: Type `[[` to trigger a file search dialog, instantly converting selections into standard relative Markdown links or image embeds.
-
-![Wikilink Support](https://vnstocks.com/images/markdown-live-editor/wikilink.png)
-
-* **Collapsible YAML Frontmatter**: Elegantly handles metadata blocks generated by apps like Obsidian, offering a collapsible UI to view frontmatter without cluttering your writing.
-  ![Features Overview](https://vnstocks.com/images/markdown-live-editor/document-features.png)
-* **Elegant Footnotes**: Effortlessly insert footnotes (`[^1]`) via the toolbar or slash command, beautifully auto-formatted with smaller, lighter text at the document's end.
-* **Automatic Image Captions**: Image file names are elegantly rendered as markdown captions beneath your pictures.
-* **Configurable Typography**: Switch between a modern `sans-serif` default or an immersive `serif` (Substack-style) font via VS Code settings for optimal reading and writing comfort.
+  </details>
+  
+* **Auto-Save & Auto-Refresh**: Your notes are reliably saved as you write. The live editor also updates on the fly whenever you tweak fonts, UI languages, or image paths—no manual reloads required.
+* **Configurable Typography**: Switch between a modern `sans-serif` default or an immersive `serif` (Substack-style) font via VS Code settings.
 
 ## 🚀 Getting Started
 

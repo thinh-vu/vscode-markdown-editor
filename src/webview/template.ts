@@ -150,25 +150,36 @@ export function getHtmlForWebview(
                     .context-menu {
                         display: none;
                         position: absolute;
-                        background-color: var(--vscode-menu-background);
-                        border: 1px solid var(--vscode-menu-border);
-                        box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+                        background-color: var(--vscode-menu-background, var(--vscode-editorWidget-background, #252526));
+                        border: 1px solid var(--vscode-menu-border, var(--vscode-editorWidget-border, #454545));
+                        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
                         z-index: 2000;
-                        border-radius: 4px;
-                        min-width: 160px;
+                        border-radius: 6px;
+                        min-width: 170px;
+                        padding: 4px;
                     }
                     .context-menu-item {
-                        padding: 8px 12px;
+                        padding: 6px 12px;
                         cursor: pointer;
                         font-size: 13px;
-                        color: var(--vscode-menu-foreground);
+                        font-family: var(--vscode-font-family, sans-serif);
+                        font-weight: 500;
+                        color: var(--vscode-menu-foreground, var(--vscode-editorWidget-foreground, var(--vscode-foreground, #ffffff)));
                         display: flex;
                         align-items: center;
                         gap: 8px;
+                        border-radius: 4px;
+                        transition: background-color 0.12s ease, color 0.12s ease;
+                    }
+                    .context-menu-item svg {
+                        width: 15px;
+                        height: 15px;
+                        stroke: currentColor;
+                        flex-shrink: 0;
                     }
                     .context-menu-item:hover {
-                        background-color: var(--vscode-menu-selectionBackground);
-                        color: var(--vscode-menu-selectionForeground);
+                        background-color: var(--vscode-menu-selectionBackground, var(--vscode-list-activeSelectionBackground, #094771));
+                        color: var(--vscode-menu-selectionForeground, var(--vscode-list-activeSelectionForeground, #ffffff)) !important;
                     }
                     .toolbar-select {
                         background: transparent;
@@ -777,6 +788,13 @@ export function getHtmlForWebview(
                     <div class="context-menu-item" id="ctx-del-table" style="color: var(--vscode-errorForeground);">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
                         Delete Table
+                    </div>
+                </div>
+
+                <div id="text-context-menu" class="context-menu">
+                    <div class="context-menu-item" id="ctx-send-to-ai">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+                        <span>Send to AI Context</span>
                     </div>
                 </div>
 

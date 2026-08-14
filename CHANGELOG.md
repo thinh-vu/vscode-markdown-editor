@@ -5,11 +5,37 @@ All notable changes to the "obsidian-markdown-live-editor" extension will be doc
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.0.6
+
+### ✨ New Features
+
+* **AI Agent Context Integration**: Added seamless integration with Antigravity AI Agent / VS Code Chat. Highlight any text in the live editor and right-click to choose **"Send to AI Context"** or use the shortcut `Cmd + Shift + L` (`Ctrl + Shift + L` on Windows/Linux) to attach the exact selection as a rich file context tag without cluttering your workspace with temporary files.
+* **Workspace Sidebar Explorer**: Introduced a brand-new dedicated Sidebar panel specifically for managing your Markdown notes. 
+  * Displays a clean list of all Markdown files in your configured vault directory.
+  * Extracted image thumbnails automatically displayed next to your note preview.
+  * Organized neatly into two smart tabs: **Recent Files** (sorted by last modified) and **Vault Files** (alphabetical).
+  * Auto-refreshes in real-time when files are added, modified, or deleted.
+* **Streamlined Note Creation**: Consolidated "New Note" and "New Note from Template" actions into a single intuitive `+` button in the Sidebar header. If you've configured a template directory in settings, clicking it opens a sleek quick-pick menu.
+* **Configurable Vault Directories**: Choose exactly which folder the Sidebar scans via the `markdownLive.sidebarScanDirectory` setting to eliminate noise from `node_modules` or other irrelevant folders.
+
+### 🐛 Bug Fixes
+
+* **Context Menu Styling & Contrast**: Fixed contrast and text visibility for the custom right-click context menu across light and dark VS Code themes.
+* **UI Layout Stability**: Fixed a critical bug where raw HTML inside Markdown documents would break the Sidebar's DOM layout and create an unintended "carousel" effect.
+* **Broken Images**: Sidebar thumbnails now automatically detect broken or micro-tracking-pixel images and gracefully hide them to maintain visual cleanliness.
+
+## v0.0.5
+
+### 🐛 Bug Fixes
+
+* **Properties (YAML Frontmatter)**: Fixed a critical bug where the YAML frontmatter was being automatically deleted when typing in the WYSIWYG editor. Properties now display correctly in the metadata UI and synchronize perfectly without duplicating inside the editor.
+
 ## v0.0.4
 
 This release brings a massive architectural overhaul and introduces a suite of premium features designed to make writing in VS Code a truly frictionless, Obsidian-like experience.
 
 ### ✨ Highlights & New Features
+
 * **Modular Architecture**: Completely refactored webview communication and editor orchestration, deeply integrating Milkdown (WYSIWYG) and CodeMirror 6 (Source Mode) into robust, performant modules.
 * **Smart Asset & Media Management**:
   * **Auto-Cleanup**: Intelligently detects when a markdown file is deleted and prompts to clean up orphaned image assets to prevent system junk.
@@ -28,11 +54,13 @@ This release brings a massive architectural overhaul and introduces a suite of p
   * Re-ordered User Settings to improve logical configuration flow.
 
 ### 🐛 Bug Fixes
+
 * **Interactive HTML**: Fixed native HTML `<details>` and `<summary>` (collapsible) tags so they can be toggled smoothly directly inside the WYSIWYG editor.
 * **Infinite Dirty-Dot Loop**: Resolved an issue where the file tab would constantly show an unsaved indicator due to `CRLF` / `LF` line-ending mismatches during Auto-Save.
 * **Live Editor Sync**: Fixed a critical regression where text changes made inside the Live Editor were failing to emit edit events back to the VS Code document.
 
 ### 🛠 Chore & Miscellaneous
+
 * Added **Internationalization (i18n)** support for the extension UI.
 * Configured full project linting, formatting, and unit testing infrastructure.
 * Updated project license to **GPL-3.0**.

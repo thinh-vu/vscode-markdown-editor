@@ -2,7 +2,7 @@
   "name": "obsidian-markdown-live-editor",
   "displayName": "Obsidian-style Markdown Editor",
   "description": "A seamless, Obsidian-like Markdown editor for VS Code",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "license": "GPL-3.0",
   "keywords": [
     "markdown",
@@ -11,7 +11,6 @@
     "preview"
   ],
   "publisher": "vnstock",
-  "icon": "assets/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/thinh-vu/vscode-markdown-editor"
@@ -37,6 +36,24 @@
         "priority": "option"
       }
     ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "markdownLiveSidebar",
+          "title": "Markdown Live",
+          "icon": "$(markdown)"
+        }
+      ]
+    },
+    "views": {
+      "markdownLiveSidebar": [
+        {
+          "type": "webview",
+          "id": "markdownLive.fileBrowser",
+          "name": "Notes"
+        }
+      ]
+    },
     "menus": {
       "editor/title": [
         {
@@ -51,6 +68,18 @@
           "group": "navigation",
           "when": "resourceLangId == markdown"
         }
+      ],
+      "view/title": [
+        {
+          "command": "markdown-live.newNote",
+          "when": "view == markdownLive.fileBrowser",
+          "group": "navigation@1"
+        },
+        {
+          "command": "markdown-live.refreshSidebar",
+          "when": "view == markdownLive.fileBrowser",
+          "group": "navigation@2"
+        }
       ]
     },
     "commands": [
@@ -62,6 +91,20 @@
       {
         "command": "markdown-live.sendToAI",
         "title": "Send to AI Agent Context"
+      },
+      {
+        "command": "markdown-live.newNote",
+        "title": "New Note",
+        "icon": "$(add)"
+      },
+      {
+        "command": "markdown-live.newNoteFromTemplate",
+        "title": "New Note from Template"
+      },
+      {
+        "command": "markdown-live.refreshSidebar",
+        "title": "Refresh Notes",
+        "icon": "$(refresh)"
       },
       {
         "command": "markdown-live.insertLink",
@@ -133,8 +176,8 @@
       },
       {
         "command": "markdown-live.sendToAI",
-        "key": "ctrl+l",
-        "mac": "cmd+l",
+        "key": "ctrl+shift+l",
+        "mac": "cmd+shift+l",
         "when": "activeCustomEditorId == 'markdownLive.editor'"
       },
       {
@@ -239,6 +282,16 @@
           ],
           "default": "en",
           "description": "UI language for the Markdown Live Editor (en/vi)"
+        },
+        "markdownLive.defaultNoteDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Thư mục mặc định để tạo ghi chú mới (đường dẫn tương đối từ workspace root). Để trống sẽ tạo tại root."
+        },
+        "markdownLive.sidebarScanDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Thư mục để Sidebar quét và hiển thị file Markdown (ví dụ: 'notes'). Để trống sẽ quét toàn bộ workspace."
         },
         "markdownLive.fontFamily": {
           "type": "string",

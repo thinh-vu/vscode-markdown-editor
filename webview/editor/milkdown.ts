@@ -51,9 +51,17 @@ export async function initMilkdown(initialText: string) {
             state.currentFrontmatter = match[0];
             updateMetadataUI(match[1]);
             markdownToRender = markdown.slice(match[0].length);
-          } else {
-            state.currentFrontmatter = '';
-            updateMetadataUI('');
+            
+            // Remove frontmatter from Milkdown if it was just typed/inserted
+            setTimeout(() => {
+              if (state.editor) {
+                state.isUpdatingFromVSCode = true;
+                state.editor.action(replaceAll(markdownToRender));
+                setTimeout(() => {
+                  state.isUpdatingFromVSCode = false;
+                }, 50);
+              }
+            }, 0);
           }
           state.lastMarkdown = markdownToRender;
 

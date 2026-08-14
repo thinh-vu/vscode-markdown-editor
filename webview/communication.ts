@@ -114,6 +114,10 @@ export function setupMessageListener() {
         state.publicPathPrefix = message.publicPathPrefix;
         state.workspaceRoot = message.workspaceRoot;
         break;
+
+      case 'command':
+        handleVSCodeCommand(message.command);
+        break;
     }
   });
 }

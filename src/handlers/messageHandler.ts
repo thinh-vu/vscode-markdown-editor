@@ -17,8 +17,24 @@ export async function handleWebviewMessage(
           }, 10);
           break;
         case 'sendToAI':
-          vscode.env.clipboard.writeText(e.text);
-          vscode.commands.executeCommand('workbench.action.chat.open', e.text);
+          try {
+            const fileName = document.uri.path.split('/').pop() || 'markdown_context.md';
+            const richContext = {
+              uri: document.uri,
+              name: fileName,
+              label: 'Selection from ' + fileName,
+              text: e.text,
+              content: e.text,
+              value: e.text,
+              type: 'file',
+              kind: 'file'
+            };
+            await vscode.commands.executeCommand('antigravity.addContext', richContext);
+          } catch (err) {
+            // Fallback if Antigravity API is not available
+            vscode.env.clipboard.writeText(e.text);
+            vscode.commands.executeCommand('workbench.action.chat.open', e.text);
+          }
           break;
 
         case 'toggleEditor':

@@ -44,6 +44,15 @@ A seamless, Obsidian-like Markdown WYSIWYG editor built natively for VS Code / A
   ![Image Rename Context Menu](https://vnstocks.com/images/markdown-live-editor/trigger-image-file-rename.png)
 
   </details>
+* **Workspace Sidebar Explorer**:
+  * A dedicated native Sidebar panel for managing your Markdown notes, separating your writing vault from your code explorer.
+  * Beautiful note cards featuring automatic **Image Thumbnail Extraction** and text previews.
+  * Smart organization with two dedicated tabs: **Recent Files** (for quick access to active work) and **Vault Files** (for alphabetical browsing).
+  * Filter the noise: Configure a specific `markdownLive.sidebarScanDirectory` so the sidebar only shows your actual notes, ignoring `node_modules` or build folders.
+  * Consolidated quick-actions to create empty notes or spawn notes directly from your templates.
+* **Seamless AI Agent Integration (Send to AI Context)**:
+  * Highlight any excerpt in the live editor, right-click to select **"Send to AI Context"**, or use keyboard shortcut `Cmd + Shift + L` (`Ctrl + Shift + L` on Windows/Linux).
+  * Effortlessly tags and injects the selected context directly into your active **Antigravity AI Agent** / VS Code Chat panel, attaching direct file references with pinpoint precision.
 
 ### ✨ Quality of Life & Extended Syntax
 
@@ -125,7 +134,7 @@ The extension comes with several customization options available in your VS Code
 | Command                | Mac                      | Windows/Linux            |
 | ---------------------- | ------------------------ | ------------------------ |
 | **Open Live Editor**   | `Cmd + Ctrl + Shift + M` | `Ctrl + Alt + Shift + M` |
-| **Send to AI Context** | `Cmd + L`                | `Ctrl + L`               |
+| **Send to AI Context** | `Cmd + Shift + L`        | `Ctrl + Shift + L`       |
 | **Insert Link**        | `Cmd + K`                | `Ctrl + K`               |
 | **Insert Table**       | `Cmd + Option + T`       | `Ctrl + Shift + T`       |
 | **Insert Code Block**  | `Cmd + Option + C`       | `Ctrl + Shift + C`       |

@@ -198,7 +198,9 @@ function setupToolbarEvents() {
 function setupContextMenuEvents() {
   document.addEventListener('click', () => {
     const menu = document.getElementById('table-context-menu');
+    const textMenu = document.getElementById('text-context-menu');
     if (menu) menu.style.display = 'none';
+    if (textMenu) textMenu.style.display = 'none';
   });
 
   document.querySelectorAll('#admonition-menu .dropdown-item').forEach((item) => {
@@ -212,18 +214,37 @@ function setupContextMenuEvents() {
 
   document.addEventListener('contextmenu', (e) => {
     const target = e.target as HTMLElement;
+    if (target.tagName === 'IMG') return; // Handled by image observer
+
     const table = target.closest('table');
     const menu = document.getElementById('table-context-menu');
-    if (menu) {
-      if (table) {
-        e.preventDefault();
+    const textMenu = document.getElementById('text-context-menu');
+
+    if (menu) menu.style.display = 'none';
+    if (textMenu) textMenu.style.display = 'none';
+
+    const selection = window.getSelection();
+    if (selection && selection.toString().trim().length > 0) {
+      e.preventDefault();
+      if (textMenu) {
+        textMenu.style.display = 'block';
+        textMenu.style.left = `${e.pageX}px`;
+        textMenu.style.top = `${e.pageY}px`;
+      }
+    } else if (table) {
+      e.preventDefault();
+      if (menu) {
         menu.style.display = 'block';
         menu.style.left = `${e.pageX}px`;
         menu.style.top = `${e.pageY}px`;
-      } else {
-        menu.style.display = 'none';
       }
     }
+  });
+
+  document.getElementById('ctx-send-to-ai')?.addEventListener('click', () => {
+    import('../communication').then(({ handleVSCodeCommand }) => {
+      handleVSCodeCommand('sendToAI');
+    });
   });
 
   document.getElementById('ctx-add-row')?.addEventListener('click', () => {

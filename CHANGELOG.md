@@ -46,20 +46,3 @@ This release brings a massive architectural overhaul and introduces a suite of p
 * Basic bi-directional synchronization between extension host and webview.
 * VS Code `markdownLive.language` configuration for i18n support.
 * Configurable image public path via `markdownLive.imagePublicPath`.
-
-<br />
-
-> \[!IMPORTANT]
-> Nội dung này quan trọng lắm nhé
-
-> \[!TIP]
-> Nội dung nhớ cho rõ nhé
-
-> \[!CAUTION]
-> Cẩn thận
-
-> \[!WARNING]
-> Cảnh báo
-
-> \[!NOTE]
-> Thông tin

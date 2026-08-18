@@ -11,6 +11,8 @@ import { state, vscode } from '../state';
 import { initCodeMirror } from '../editor/codemirror';
 import { updateMetadataUI } from './metadata';
 
+let targetImage: HTMLImageElement | null = null;
+
 export function setupUIEvents() {
   setupImageObserver();
   setupToolbarEvents();
@@ -86,12 +88,12 @@ function setupImageObserver() {
     const target = e.target as HTMLElement;
     if (target.tagName === 'IMG') {
       e.preventDefault();
-      const rawSrc = target.getAttribute('data-raw-src') || target.getAttribute('src');
-      if (vscode) {
-        vscode.postMessage({
-          type: 'renameImage',
-          src: rawSrc,
-        });
+      targetImage = target as HTMLImageElement;
+      const imageMenu = document.getElementById('image-context-menu');
+      if (imageMenu) {
+        imageMenu.style.display = 'block';
+        imageMenu.style.left = `${e.pageX}px`;
+        imageMenu.style.top = `${e.pageY}px`;
       }
     }
   });
@@ -167,6 +169,20 @@ function setupToolbarEvents() {
     }
   });
 
+  document.getElementById('btn-toc')?.addEventListener('click', () => {
+    if (vscode) {
+      vscode.postMessage({ type: 'insertTOC' });
+    }
+  });
+
+  document.getElementById('btn-export-pdf')?.addEventListener('click', () => {
+    if (vscode) {
+      vscode.postMessage({ type: 'showInfo', message: 'Preparing PDF export...' });
+      const htmlContent = document.documentElement.outerHTML;
+      vscode.postMessage({ type: 'exportPdf', html: htmlContent });
+    }
+  });
+
   document.getElementById('btn-copy')?.addEventListener('click', async () => {
     try {
       const editorDiv = document.querySelector('.milkdown .editor') as HTMLElement;
@@ -199,8 +215,10 @@ function setupContextMenuEvents() {
   document.addEventListener('click', () => {
     const menu = document.getElementById('table-context-menu');
     const textMenu = document.getElementById('text-context-menu');
+    const imageMenu = document.getElementById('image-context-menu');
     if (menu) menu.style.display = 'none';
     if (textMenu) textMenu.style.display = 'none';
+    if (imageMenu) imageMenu.style.display = 'none';
   });
 
   document.querySelectorAll('#admonition-menu .dropdown-item').forEach((item) => {
@@ -245,6 +263,28 @@ function setupContextMenuEvents() {
     import('../communication').then(({ handleVSCodeCommand }) => {
       handleVSCodeCommand('sendToAI');
     });
+  });
+
+  document.getElementById('ctx-img-rename')?.addEventListener('click', () => {
+    if (targetImage && vscode) {
+      const rawSrc = targetImage.getAttribute('data-raw-src') || targetImage.getAttribute('src');
+      vscode.postMessage({
+        type: 'renameImage',
+        src: rawSrc,
+      });
+      targetImage = null;
+    }
+  });
+
+  document.getElementById('ctx-img-reveal')?.addEventListener('click', () => {
+    if (targetImage && vscode) {
+      const rawSrc = targetImage.getAttribute('data-raw-src') || targetImage.getAttribute('src');
+      vscode.postMessage({
+        type: 'revealImage',
+        src: rawSrc,
+      });
+      targetImage = null;
+    }
   });
 
   document.getElementById('ctx-add-row')?.addEventListener('click', () => {

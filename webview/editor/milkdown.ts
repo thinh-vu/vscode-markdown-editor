@@ -33,6 +33,7 @@ import { updateMetadataUI, frontmatterRegex } from '../ui/metadata';
 import { insertFootnote } from '../utils/markdown';
 import { yamlPlugin } from '../yamlPlugin';
 import { hashtagPlugin } from '../plugins/hashtag';
+import { imagePastePlugin } from '../plugins/imagePaste';
 
 const slash = slashFactory('my-slash');
 
@@ -198,7 +199,7 @@ export async function initMilkdown(initialText: string) {
         }
       });
 
-      ctx.update(prosePluginsCtx, (prev) => [...prev, admonitionPlugin, hashtagPlugin, slashPlugin]);
+      ctx.update(prosePluginsCtx, (prev) => [...prev, admonitionPlugin, hashtagPlugin, slashPlugin, imagePastePlugin]);
     })
     .config(nord)
     .use(commonmark)

@@ -1,6 +1,6 @@
 # Markdown Live Editor
 
-[![VS Code Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/vnstock.obsidian-markdown-live-editor?label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=vnstock.obsidian-markdown-live-editor)
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=vnstock.obsidian-markdown-live-editor)
 [![Open VSX](https://img.shields.io/open-vsx/v/vnstock/obsidian-markdown-live-editor.svg?label=Open%20VSX)](https://open-vsx.org/extension/vnstock/obsidian-markdown-live-editor)
 [![GitHub issues](https://img.shields.io/github/issues/thinh-vu/vscode-markdown-editor.svg)](https://github.com/thinh-vu/vscode-markdown-editor/issues)
 [![GitHub stars](https://img.shields.io/github/stars/thinh-vu/vscode-markdown-editor.svg)](https://github.com/thinh-vu/vscode-markdown-editor/stargazers)
@@ -53,6 +53,9 @@ A seamless, Obsidian-like Markdown WYSIWYG editor built natively for VS Code / A
 * **Seamless AI Agent Integration (Send to AI Context)**:
   * Highlight any excerpt in the live editor, right-click to select **"Send to AI Context"**, or use keyboard shortcut `Cmd + Shift + L` (`Ctrl + Shift + L` on Windows/Linux).
   * Effortlessly tags and injects the selected context directly into your active **Antigravity AI Agent** / VS Code Chat panel, attaching direct file references with pinpoint precision.
+* **Beautiful PDF Export**:
+  * Export your Markdown documents into professional, beautifully styled PDFs with a single click.
+  * Powered by Paged.js for true print pagination, complete with automatic Table of Contents generation and customizable print styles.
 
 ### ✨ Quality of Life & Extended Syntax
 

@@ -618,6 +618,64 @@ export function getHtmlForWebview(
                     .flyout-outline:hover .outline-h2 { padding-left: 14px; }
                     .flyout-outline:hover .outline-h3 { padding-left: 28px; }
                     .flyout-outline:hover .outline-h4 { padding-left: 42px; }
+
+                    /* Print Pagination and Styles */
+                    @media print {
+                        body {
+                            background: white !important;
+                            color: black !important;
+                            height: auto !important;
+                            overflow: visible !important;
+                        }
+                        
+                        /* Hide non-printable elements */
+                        .toolbar,
+                        .flyout-outline,
+                        #metadata-container,
+                        .context-menu,
+                        #table-modal-overlay,
+                        #table-modal,
+                        ::-webkit-scrollbar {
+                            display: none !important;
+                        }
+                        
+                        /* Reset editor container constraints for natural pagination */
+                        #editor, .milkdown, .ProseMirror, .cm-editor {
+                            height: auto !important;
+                            overflow: visible !important;
+                            padding: 0 !important;
+                            margin: 0 !important;
+                            max-width: none !important;
+                            box-shadow: none !important;
+                            background: white !important;
+                        }
+                        
+                        /* Prevent elements from breaking across pages */
+                        img, pre, blockquote, table, tr, td, th, .admonition {
+                            page-break-inside: avoid;
+                            break-inside: avoid;
+                        }
+                        
+                        /* Prevent headings from being orphaned at the bottom of a page */
+                        h1, h2, h3, h4, h5, h6 {
+                            page-break-after: avoid;
+                            break-after: avoid;
+                        }
+                        
+                        /* Orphan and widow control for paragraphs */
+                        p, li {
+                            orphans: 3;
+                            widows: 3;
+                        }
+                        
+                        /* Admonition contrast for printing */
+                        .milkdown .editor .admonition {
+                            border: 1px solid #ccc !important;
+                            border-left-width: 4px !important;
+                            background-color: transparent !important;
+                            box-shadow: none !important;
+                        }
+                    }
                 </style>
             </head>
             <body>
@@ -698,6 +756,9 @@ export function getHtmlForWebview(
                     <button id="btn-table" title="Insert Table (Cmd+Opt+T)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="3" x2="21" y1="15" y2="15"/><line x1="9" x2="9" y1="3" y2="21"/><line x1="15" x2="15" y1="3" y2="21"/></svg>
                     </button>
+                    <button id="btn-toc" title="Insert Table of Contents">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-tree"><path d="M21 12h-8"/><path d="M21 6H8"/><path d="M21 18h-8"/><path d="M12 12h-2"/><path d="M12 18h-2"/><path d="M3 6v4c0 1.1.9 2 2 2h3"/><path d="M3 10v6c0 1.1.9 2 2 2h3"/></svg>
+                    </button>
                     <div class="dropdown">
                         <button id="btn-admonition" title="Insert Admonition" style="padding-right: 2px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-warning"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v2"/><path d="M12 13h.01"/></svg>
@@ -713,6 +774,9 @@ export function getHtmlForWebview(
                     </div>
                     
                     <div class="spacer"></div>
+                    <button id="btn-export-pdf" title="Export PDF">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                    </button>
                     <button id="btn-copy" title="Copy Rich Text">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                     </button>
@@ -795,6 +859,17 @@ export function getHtmlForWebview(
                     <div class="context-menu-item" id="ctx-send-to-ai">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
                         <span>Send to AI Context</span>
+                    </div>
+                </div>
+                
+                <div id="image-context-menu" class="context-menu">
+                    <div class="context-menu-item" id="ctx-img-rename">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                        Rename Image
+                    </div>
+                    <div class="context-menu-item" id="ctx-img-reveal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-search"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/><path d="m14 15 1.5 1.5"/></svg>
+                        Reveal in Explorer
                     </div>
                 </div>
 

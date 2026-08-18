@@ -18,7 +18,7 @@ import { initCodeMirror } from './editor/codemirror';
 import { insertFootnote } from './utils/markdown';
 
 export function setupMessageListener() {
-  window.addEventListener('message', (event) => {
+  window.addEventListener('message', async (event) => {
     const message = event.data;
     switch (message.type) {
       case 'update':
@@ -106,6 +106,19 @@ export function setupMessageListener() {
             });
             
             if (tr.docChanged) dispatch(tr);
+          });
+        }
+        break;
+
+      case 'insertImage':
+        if (state.editor) {
+          state.editor.action((ctx: any) => {
+             const view = ctx.get(editorViewCtx);
+             const { state: pmState, dispatch } = view;
+             const imageNode = pmState.schema.nodes.image.create({ src: message.url, alt: 'image' });
+             const pastePos = message.pastePos !== undefined ? message.pastePos : pmState.selection.from;
+             const tr = pmState.tr.insert(pastePos, imageNode);
+             dispatch(tr);
           });
         }
         break;

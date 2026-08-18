@@ -2,7 +2,8 @@
   "name": "obsidian-markdown-live-editor",
   "displayName": "Obsidian-style Markdown Editor",
   "description": "A seamless, Obsidian-like Markdown editor for VS Code",
-  "version": "0.0.6",
+  "version": "0.0.8",
+  "icon": "assets/icon.png",
   "license": "GPL-3.0",
   "keywords": [
     "markdown",
@@ -321,6 +322,31 @@
           "type": "string",
           "default": "",
           "description": "Prefix applied to absolute image paths (starting with '/') in your Markdown. Example: if your image is `![Alt](/images/foo.png)` but the actual file is at `public/images/foo.png`, set this to `public`. Leave empty to resolve directly from the workspace root."
+        },
+        "markdownLive.printHeaderFormat": {
+          "type": "string",
+          "default": "{title}",
+          "description": "Format for the printed header. Supports YAML variables like {title} or {author}."
+        },
+        "markdownLive.printFooterFormat": {
+          "type": "string",
+          "default": "{signature}",
+          "description": "Format for the printed footer. Supports YAML variables like {signature} or {website}."
+        },
+        "markdownLive.printPageNumberFormat": {
+          "type": "string",
+          "default": "{page}",
+          "description": "Format for page numbering when printing. Use {page} for current page. Leave empty to disable."
+        },
+        "markdownLive.printFontFamily": {
+          "type": "string",
+          "default": "",
+          "description": "Custom font family to use when printing/exporting to PDF (e.g. 'Times New Roman, serif'). Leave empty to use the editor's default font."
+        },
+        "markdownLive.printAutoTOC": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically insert a Table of Contents at the beginning of the printed document."
         }
       }
     }

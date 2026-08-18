@@ -5,24 +5,40 @@ All notable changes to the "obsidian-markdown-live-editor" extension will be doc
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.0.6
+## v0.0.8
 
 ### ✨ New Features
 
-* **AI Agent Context Integration**: Added seamless integration with Antigravity AI Agent / VS Code Chat. Highlight any text in the live editor and right-click to choose **"Send to AI Context"** or use the shortcut `Cmd + Shift + L` (`Ctrl + Shift + L` on Windows/Linux) to attach the exact selection as a rich file context tag without cluttering your workspace with temporary files.
-* **Workspace Sidebar Explorer**: Introduced a brand-new dedicated Sidebar panel specifically for managing your Markdown notes. 
+* **PDF Export & Pagination**: Export Markdown to beautifully styled PDFs powered by Paged.js, including automatic Table of Contents generation and print layout optimization.
+* **Enhanced Image Management**: Added comprehensive image pasting support. You can now rename images directly from the context menu (smartly excluding file extensions during rename) and quickly reveal them in the Explorer.
+
+## v0.0.7
+
+### ✨ New Features
+
+* **Workspace Sidebar Explorer**: Introduced a brand-new dedicated Sidebar panel specifically for managing your Markdown notes.
   * Displays a clean list of all Markdown files in your configured vault directory.
   * Extracted image thumbnails automatically displayed next to your note preview.
   * Organized neatly into two smart tabs: **Recent Files** (sorted by last modified) and **Vault Files** (alphabetical).
   * Auto-refreshes in real-time when files are added, modified, or deleted.
 * **Streamlined Note Creation**: Consolidated "New Note" and "New Note from Template" actions into a single intuitive `+` button in the Sidebar header. If you've configured a template directory in settings, clicking it opens a sleek quick-pick menu.
 * **Configurable Vault Directories**: Choose exactly which folder the Sidebar scans via the `markdownLive.sidebarScanDirectory` setting to eliminate noise from `node_modules` or other irrelevant folders.
+* **Path Handling & Branding**: Added a custom extension icon and improved file path handling by migrating to workspace-relative paths and robust URI serialization.
+
+### 🐛 Bug Fixes
+
+* **UI Layout Stability**: Fixed a critical bug where raw HTML inside Markdown documents would break the Sidebar's DOM layout and create an unintended "carousel" effect.
+* **Broken Images**: Sidebar thumbnails now automatically detect broken or micro-tracking-pixel images and gracefully hide them to maintain visual cleanliness.
+
+## v0.0.6
+
+### ✨ New Features
+
+* **AI Agent Context Integration**: Added seamless integration with Antigravity AI Agent / VS Code Chat. Highlight any text in the live editor and right-click to choose **"Send to AI Context"** or use the shortcut `Cmd + Shift + L` (`Ctrl + Shift + L` on Windows/Linux) to attach the exact selection as a rich file context tag without cluttering your workspace with temporary files.
 
 ### 🐛 Bug Fixes
 
 * **Context Menu Styling & Contrast**: Fixed contrast and text visibility for the custom right-click context menu across light and dark VS Code themes.
-* **UI Layout Stability**: Fixed a critical bug where raw HTML inside Markdown documents would break the Sidebar's DOM layout and create an unintended "carousel" effect.
-* **Broken Images**: Sidebar thumbnails now automatically detect broken or micro-tracking-pixel images and gracefully hide them to maintain visual cleanliness.
 
 ## v0.0.5
 

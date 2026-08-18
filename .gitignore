@@ -1,6 +1,5 @@
 .DS_Store
 *.vsix
-/docs
 
 # Logs
 logs

@@ -34,7 +34,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
           break;
         }
         case 'openFile': {
-          const uri = vscode.Uri.file(data.value);
+          const uri = vscode.Uri.parse(data.value);
           await vscode.commands.executeCommand('vscode.openWith', uri, 'markdownLive.editor');
           break;
         }
@@ -146,7 +146,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
           const preview = cleanContent.substring(0, 100) + (cleanContent.length > 100 ? '...' : '');
 
           htmlList += `
-            <div class="note-item" onclick="openFile('${uri.fsPath.replace(/\\/g, '\\\\')}')">
+            <div class="note-item" onclick="openFile('${uri.toString()}')">
               <div class="note-content">
                 <div class="note-title">${escapeHtml(title)}</div>
                 <div class="note-preview">${preview ? escapeHtml(preview) : '<em>Empty note</em>'}</div>

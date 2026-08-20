@@ -1,13 +1,16 @@
-# Markdown Live Editor
+# Obsidian-Style Markdown Live Editor for VS Code
 
-[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=vnstock.obsidian-markdown-live-editor)
-[![Open VSX](https://img.shields.io/open-vsx/v/vnstock/obsidian-markdown-live-editor.svg?label=Open%20VSX)](https://open-vsx.org/extension/vnstock/obsidian-markdown-live-editor)
-[![GitHub issues](https://img.shields.io/github/issues/thinh-vu/vscode-markdown-editor.svg)](https://github.com/thinh-vu/vscode-markdown-editor/issues)
-[![GitHub stars](https://img.shields.io/github/stars/thinh-vu/vscode-markdown-editor.svg)](https://github.com/thinh-vu/vscode-markdown-editor/stargazers)
+[![VS Code Extension](https://img.shields.io/badge/VS%20Code-Extension-blue?style=flat&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=vnstock.obsidian-markdown-live-editor)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=flat&logo=github)](https://github.com/thinh-vu/vscode-markdown-editor)
+[![License](https://img.shields.io/badge/License-GPL--3.0-green?style=flat)](LICENSE.txt)
 
-A seamless, Obsidian-like Markdown WYSIWYG editor built natively for VS Code / Antigravity IDE. Experience the perfect blend of a frictionless writing environment with the power of modern developer tools.
+A blazing-fast, **Obsidian-style Markdown WYSIWYG editor** built natively as a **VS Code extension**. Experience seamless **real-time preview**, rich text formatting, and frictionless note-taking directly inside your code editor. This extension serves as the ultimate **VS Code Markdown alternative**, bringing the aesthetic and productivity of Notion and Obsidian to your IDE.
 
 ![First Impression](https://vnstocks.com/images/markdown-live-editor/vs-code-markdown-live-editor-web.png)
+
+## ❓ Why choose this over the default VS Code Markdown Preview?
+
+Tired of splitting your screen just to see how your Markdown looks? Default VS Code forces you into a clunky dual-pane setup, wasting screen space and breaking your flow. This extension brings the **true WYSIWYG (What You See Is What You Get)** experience right into your IDE, allowing you to edit styled text visually without writing raw syntax. Perfect for crafting `README.md` files, API documentation, or personal knowledge management (PKM).
 
 ## ✨ Features
 
@@ -56,6 +59,10 @@ A seamless, Obsidian-like Markdown WYSIWYG editor built natively for VS Code / A
 * **Beautiful PDF Export**:
   * Export your Markdown documents into professional, beautifully styled PDFs with a single click.
   * Powered by Paged.js for true print pagination, complete with automatic Table of Contents generation and customizable print styles.
+* **In-Editor Find & Replace**:
+  * A fully interactive, floating Find & Replace widget embedded natively inside the WYSIWYG interface. Includes Match Case toggling and supports standard `Cmd + F` shortcuts.
+* **Native Git Diff Compatibility**:
+  * Designed to play nicely with VS Code's Source Control. If set as your default Markdown editor, clicking a changed file intelligently falls back to the native split-screen Git Diff so you never lose visibility over your version history.
 
 ### ✨ Quality of Life & Extended Syntax
 
@@ -111,8 +118,9 @@ A seamless, Obsidian-like Markdown WYSIWYG editor built natively for VS Code / A
   ![Interactive Toolbar](https://vnstocks.com/images/markdown-live-editor/toolbar.png)
 
   </details>
-  
+
 * **Auto-Save & Auto-Refresh**: Your notes are reliably saved as you write. The live editor also updates on the fly whenever you tweak fonts, UI languages, or image paths—no manual reloads required.
+
 * **Configurable Typography**: Switch between a modern `sans-serif` default or an immersive `serif` (Substack-style) font via VS Code settings.
 
 ## 🚀 Getting Started
@@ -148,7 +156,7 @@ The extension comes with several customization options available in your VS Code
 ## 🤝 Credits & Acknowledgements
 
 * **Author**: [Thinh Vu](https://github.com/thinh-vu)
-* **Project Ecosystem**: Brought to you by [Vnstocks](https://vnstocks.com/).
+* **Project Ecosystem**: Brought to you by [Vnstock](https://vnstocks.com/).
 * **Open Source Foundations**: Built on top of the amazing [Milkdown](https://milkdown.dev/) and [CodeMirror 6](https://codemirror.net/).
 
 ***

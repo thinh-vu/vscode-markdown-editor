@@ -5,6 +5,22 @@ All notable changes to the "obsidian-markdown-live-editor" extension will be doc
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.0.9
+
+### ✨ New Features
+
+* **In-Editor Find & Replace**: Added a fully interactive, floating Find & Replace widget natively inside the WYSIWYG editor. Complete with Match Case, Next/Previous navigation, Replace/Replace All, and support for standard keyboard shortcuts (`Cmd + F` / `Ctrl + F`).
+* **Git Diff Smart Fallback**: Solved a core limitation of VS Code Custom Editors. If you set Live Editor as your default Markdown viewer, clicking a file in the Source Control (Git Diff) panel will now show a smart fallback UI that seamlessly redirects you to the native VS Code split-screen text diff.
+
+### 🐛 Bug Fixes
+
+* **Toolbar Buttons**: Fixed missing event listeners for formatting buttons including Bold, Italic, Strikethrough, Quote, and Footnote.
+* **Link & Image Insertion**: Fixed webview prompt blocks for links and images by migrating to native VS Code Input Box dialogs.
+* **Task List Rendering**: Fixed a bug where task list items rendered as standard bullet points. Introduced interactive CSS-based checkboxes and a ProseMirror plugin for real-time toggling without `input` elements.
+* **List Conversion**: Fixed a bug where switching between Bullet Lists and Ordered Lists from the toolbar would not correctly mutate the list type.
+* **PDF Export Assets**: Fixed a critical issue where images and media were missing during Print to PDF by properly resolving the `<base>` href to absolute local file URIs.
+
+
 ## v0.0.8
 
 ### ✨ New Features

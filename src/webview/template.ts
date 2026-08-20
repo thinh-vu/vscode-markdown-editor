@@ -48,6 +48,7 @@ export function getHtmlForWebview(
                 <meta name="image-public-path" content="${imagePublicPath}">
                 <meta name="workspace-root" content="${workspaceRootUriStr}">
                 <meta name="enable-slash-command" content="${enableSlashCommand}">
+                <meta name="config-lang" content="${configLang}">
                 <title>Markdown Live Editor</title>
                 <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
                 <link href="${styleUri}" rel="stylesheet" />
@@ -440,23 +441,42 @@ export function getHtmlForWebview(
                         padding-left: 0;
                         list-style: none;
                     }
-                    .milkdown li.task-list-item {
-                        display: flex;
-                        flex-direction: row;
-                        align-items: flex-start;
-                        gap: 12px;
-                        margin: 6px 0;
+                    .milkdown li[data-item-type="task"] {
+                        list-style-type: none;
+                        position: relative;
                     }
-                    .milkdown li.task-list-item > div {
-                        flex: 1;
-                        margin: 0;
-                    }
-                    .milkdown li.task-list-item input[type="checkbox"] {
-                        margin-top: 6px;
-                        cursor: pointer;
-                        accent-color: var(--vscode-button-background);
+                    .milkdown li[data-item-type="task"]::before {
+                        content: '';
+                        position: absolute;
+                        left: -24px;
+                        top: 6px;
                         width: 16px;
                         height: 16px;
+                        border: 1.5px solid var(--vscode-editorWidget-border);
+                        border-radius: 4px;
+                        background-color: var(--vscode-editorWidget-background);
+                        cursor: pointer;
+                        box-sizing: border-box;
+                    }
+                    .milkdown li[data-item-type="task"][data-checked="true"]::before {
+                        background-color: var(--vscode-button-background);
+                        border-color: var(--vscode-button-background);
+                    }
+                    .milkdown li[data-item-type="task"][data-checked="true"]::after {
+                        content: '';
+                        position: absolute;
+                        left: -19px;
+                        top: 9px;
+                        width: 4px;
+                        height: 8px;
+                        border: solid var(--vscode-button-foreground);
+                        border-width: 0 2px 2px 0;
+                        transform: rotate(45deg);
+                        cursor: pointer;
+                    }
+                    .milkdown li[data-item-type="task"] > div {
+                        flex: 1;
+                        margin: 0;
                     }
                     /* Source Editor CodeMirror Styles */
                     #source-editor {
@@ -676,6 +696,87 @@ export function getHtmlForWebview(
                             box-shadow: none !important;
                         }
                     }
+                    
+                    /* Find Widget */
+                    .find-widget {
+                        display: none;
+                        position: fixed;
+                        top: 10px;
+                        right: 20px;
+                        background: var(--vscode-editorWidget-background);
+                        border: 1px solid var(--vscode-editorWidget-border);
+                        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+                        z-index: 1000;
+                        border-radius: 6px;
+                        padding: 8px 12px;
+                        flex-direction: column;
+                        gap: 8px;
+                        width: 320px;
+                    }
+                    .find-widget.visible {
+                        display: flex;
+                    }
+                    .find-row {
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                    }
+                    .find-input-container {
+                        position: relative;
+                        flex: 1;
+                        display: flex;
+                        align-items: center;
+                    }
+                    .find-input {
+                        width: 100%;
+                        background: var(--vscode-input-background);
+                        color: var(--vscode-input-foreground);
+                        border: 1px solid var(--vscode-input-border);
+                        padding: 4px 28px 4px 6px;
+                        border-radius: 2px;
+                        font-family: inherit;
+                        font-size: 13px;
+                        outline: none;
+                        box-sizing: border-box;
+                    }
+                    .find-input:focus {
+                        border-color: var(--vscode-focusBorder);
+                    }
+                    .find-btn {
+                        background: transparent;
+                        border: none;
+                        color: var(--vscode-icon-foreground);
+                        cursor: pointer;
+                        padding: 4px;
+                        border-radius: 3px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .find-btn:hover {
+                        background: var(--vscode-toolbar-hoverBackground);
+                    }
+                    .find-btn.active {
+                        background: var(--vscode-badge-background);
+                        color: var(--vscode-badge-foreground);
+                    }
+                    .find-btn svg { width: 14px; height: 14px; }
+                    .match-count {
+                        font-size: 11px;
+                        color: var(--vscode-descriptionForeground);
+                        margin: 0 4px;
+                        min-width: 55px;
+                        text-align: right;
+                        white-space: nowrap;
+                    }
+                    .search-match {
+                        background-color: var(--vscode-editor-findMatchHighlightBackground, rgba(234, 92, 0, 0.33));
+                        border-radius: 2px;
+                    }
+                    .search-match-active {
+                        background-color: var(--vscode-editor-findMatchBackground, rgba(234, 92, 0, 0.5));
+                        outline: 1px solid var(--vscode-editor-findMatchBorder, transparent);
+                    }
                 </style>
             </head>
             <body>
@@ -774,6 +875,9 @@ export function getHtmlForWebview(
                     </div>
                     
                     <div class="spacer"></div>
+                    <button id="btn-search" title="Find & Replace (Cmd+F)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </button>
                     <button id="btn-export-pdf" title="Export PDF">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
                     </button>
@@ -870,6 +974,32 @@ export function getHtmlForWebview(
                     <div class="context-menu-item" id="ctx-img-reveal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-search"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="2"/><path d="m14 15 1.5 1.5"/></svg>
                         Reveal in Explorer
+                    </div>
+                </div>
+                
+                <!-- Find & Replace Widget -->
+                <div id="find-widget" class="find-widget">
+                    <div class="find-row">
+                        <button id="btn-find-toggle" class="find-btn" style="margin-right: 4px;" title="Toggle Replace">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="icon-find-toggle"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                        <div class="find-input-container">
+                            <input type="text" id="find-input" class="find-input" placeholder="Find">
+                            <button id="btn-find-case" class="find-btn" style="position: absolute; right: 2px;" title="Match Case">
+                                <span style="font-size: 11px; font-weight: 600; font-family: monospace;">Aa</span>
+                            </button>
+                        </div>
+                        <span id="find-count" class="match-count">No results</span>
+                        <button id="btn-find-prev" class="find-btn" title="Previous Match (Shift+Enter)"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button>
+                        <button id="btn-find-next" class="find-btn" title="Next Match (Enter)"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></button>
+                        <button id="btn-find-close" class="find-btn" title="Close (Escape)"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+                    </div>
+                    <div class="find-row" id="replace-row" style="display: none;">
+                        <div class="find-input-container">
+                            <input type="text" id="replace-input" class="find-input" placeholder="Replace">
+                        </div>
+                        <button id="btn-replace" class="find-btn" title="Replace (Enter)" style="font-size: 12px; padding: 4px 8px; border: 1px solid var(--vscode-button-border, transparent); background: var(--vscode-button-background); color: var(--vscode-button-foreground);">Replace</button>
+                        <button id="btn-replace-all" class="find-btn" title="Replace All (Cmd+Enter)" style="font-size: 12px; padding: 4px 8px; border: 1px solid var(--vscode-button-border, transparent); background: var(--vscode-button-secondaryBackground); color: var(--vscode-button-secondaryForeground);">All</button>
                     </div>
                 </div>
 

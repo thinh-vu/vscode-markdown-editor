@@ -110,6 +110,12 @@ export function setupMessageListener() {
         }
         break;
 
+      case 'insertLinkWithUrl':
+        if (state.editor && message.url) {
+          state.editor.action(callCommand(toggleLinkCommand.key, { href: message.url }));
+        }
+        break;
+
       case 'insertImage':
         if (state.editor) {
           state.editor.action((ctx: any) => {

@@ -2,7 +2,7 @@
   "name": "obsidian-markdown-live-editor",
   "displayName": "Obsidian-style Markdown Editor",
   "description": "A seamless, Obsidian-like Markdown editor for VS Code",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "icon": "assets/icon.png",
   "license": "GPL-3.0",
   "keywords": [
@@ -271,85 +271,111 @@
         "mac": "cmd+shift+e"
       }
     ],
-    "configuration": {
-      "type": "object",
-      "title": "Markdown Live Editor",
-      "properties": {
-        "markdownLive.language": {
-          "type": "string",
-          "enum": [
-            "en",
-            "vi"
-          ],
-          "default": "en",
-          "description": "UI language for the Markdown Live Editor (en/vi)"
-        },
-        "markdownLive.defaultNoteDirectory": {
-          "type": "string",
-          "default": "",
-          "description": "Thư mục mặc định để tạo ghi chú mới (đường dẫn tương đối từ workspace root). Để trống sẽ tạo tại root."
-        },
-        "markdownLive.sidebarScanDirectory": {
-          "type": "string",
-          "default": "",
-          "description": "Thư mục để Sidebar quét và hiển thị file Markdown (ví dụ: 'notes'). Để trống sẽ quét toàn bộ workspace."
-        },
-        "markdownLive.fontFamily": {
-          "type": "string",
-          "enum": [
-            "sans-serif",
-            "serif"
-          ],
-          "default": "sans-serif",
-          "description": "Font family used in the editor (default sans-serif or serif for a Substack-like feel)"
-        },
-        "markdownLive.enableSlashCommand": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable or disable the '/' slash command menu in the editor."
-        },
-        "markdownLive.templateFolder": {
-          "type": "string",
-          "default": "",
-          "description": "Relative path from the workspace root to your templates folder (e.g., 'templates' or '.vscode/templates'). Leave empty to disable."
-        },
-        "markdownLive.imageDirectory": {
-          "type": "string",
-          "default": "assets/images",
-          "description": "Directory to store images when pasted (e.g., assets/images)"
-        },
-        "markdownLive.imagePublicPath": {
-          "type": "string",
-          "default": "",
-          "description": "Prefix applied to absolute image paths (starting with '/') in your Markdown. Example: if your image is `![Alt](/images/foo.png)` but the actual file is at `public/images/foo.png`, set this to `public`. Leave empty to resolve directly from the workspace root."
-        },
-        "markdownLive.printHeaderFormat": {
-          "type": "string",
-          "default": "{title}",
-          "description": "Format for the printed header. Supports YAML variables like {title} or {author}."
-        },
-        "markdownLive.printFooterFormat": {
-          "type": "string",
-          "default": "{signature}",
-          "description": "Format for the printed footer. Supports YAML variables like {signature} or {website}."
-        },
-        "markdownLive.printPageNumberFormat": {
-          "type": "string",
-          "default": "{page}",
-          "description": "Format for page numbering when printing. Use {page} for current page. Leave empty to disable."
-        },
-        "markdownLive.printFontFamily": {
-          "type": "string",
-          "default": "",
-          "description": "Custom font family to use when printing/exporting to PDF (e.g. 'Times New Roman, serif'). Leave empty to use the editor's default font."
-        },
-        "markdownLive.printAutoTOC": {
-          "type": "boolean",
-          "default": false,
-          "description": "Automatically insert a Table of Contents at the beginning of the printed document."
+    "configuration": [
+      {
+        "type": "object",
+        "title": "Markdown Live: General",
+        "properties": {
+          "markdownLive.language": {
+            "type": "string",
+            "enum": [
+              "en",
+              "vi"
+            ],
+            "default": "en",
+            "description": "UI language for the Markdown Live Editor (en/vi)"
+          }
+        }
+      },
+      {
+        "type": "object",
+        "title": "Markdown Live: Editor & UI",
+        "properties": {
+          "markdownLive.fontFamily": {
+            "type": "string",
+            "enum": [
+              "sans-serif",
+              "serif"
+            ],
+            "default": "sans-serif",
+            "description": "Font family used in the editor (default sans-serif or serif for a Substack-like feel)"
+          },
+          "markdownLive.enableSlashCommand": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable or disable the '/' slash command menu in the editor."
+          }
+        }
+      },
+      {
+        "type": "object",
+        "title": "Markdown Live: Workspace & Notes",
+        "properties": {
+          "markdownLive.defaultNoteDirectory": {
+            "type": "string",
+            "default": "",
+            "description": "Default directory to create new notes (relative to workspace root). Leave empty to create at the root."
+          },
+          "markdownLive.sidebarScanDirectory": {
+            "type": "string",
+            "default": "",
+            "description": "Directory for the Sidebar to scan and display Markdown files (e.g., 'notes'). Leave empty to scan the entire workspace."
+          },
+          "markdownLive.templateFolder": {
+            "type": "string",
+            "default": "",
+            "description": "Relative path from the workspace root to your templates folder (e.g., 'templates' or '.vscode/templates'). Leave empty to disable."
+          }
+        }
+      },
+      {
+        "type": "object",
+        "title": "Markdown Live: Images",
+        "properties": {
+          "markdownLive.imageDirectory": {
+            "type": "string",
+            "default": "assets/images",
+            "description": "Directory to store images when pasted (e.g., assets/images)"
+          },
+          "markdownLive.imagePublicPath": {
+            "type": "string",
+            "default": "",
+            "description": "Prefix applied to absolute image paths (starting with '/') in your Markdown. Example: if your image is `![Alt](/images/foo.png)` but the actual file is at `public/images/foo.png`, set this to `public`. Leave empty to resolve directly from the workspace root."
+          }
+        }
+      },
+      {
+        "type": "object",
+        "title": "Markdown Live: Printing & Export",
+        "properties": {
+          "markdownLive.printHeaderFormat": {
+            "type": "string",
+            "default": "{title}",
+            "description": "Format for the printed header. Supports YAML variables like {title} or {author}."
+          },
+          "markdownLive.printFooterFormat": {
+            "type": "string",
+            "default": "{signature}",
+            "description": "Format for the printed footer. Supports YAML variables like {signature} or {website}."
+          },
+          "markdownLive.printPageNumberFormat": {
+            "type": "string",
+            "default": "{page}",
+            "description": "Format for page numbering when printing. Use {page} for current page. Leave empty to disable."
+          },
+          "markdownLive.printFontFamily": {
+            "type": "string",
+            "default": "",
+            "description": "Custom font family to use when printing/exporting to PDF (e.g. 'Times New Roman, serif'). Leave empty to use the editor's default font."
+          },
+          "markdownLive.printAutoTOC": {
+            "type": "boolean",
+            "default": false,
+            "description": "Automatically insert a Table of Contents at the beginning of the printed document."
+          }
         }
       }
-    }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

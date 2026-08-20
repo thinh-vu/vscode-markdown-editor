@@ -162,6 +162,20 @@ export async function handleWebviewMessage(
           }
           break;
         }
+        case 'promptForLink': {
+          const url = await vscode.window.showInputBox({ prompt: 'Enter link URL:' });
+          if (url !== undefined) {
+            webviewPanel.webview.postMessage({ type: 'insertLinkWithUrl', url });
+          }
+          break;
+        }
+        case 'promptForImage': {
+          const url = await vscode.window.showInputBox({ prompt: 'Enter image URL:' });
+          if (url !== undefined) {
+            webviewPanel.webview.postMessage({ type: 'insertImage', url });
+          }
+          break;
+        }
         case 'logError':
           console.error('Webview Error:', e);
           vscode.window.showErrorMessage(`Webview Error: ${e.message}`);
@@ -350,6 +364,10 @@ export async function handleWebviewMessage(
 
             // 3. Inject TOC if enabled
             let modifiedHtml = e.html;
+
+            // Fix base href for local print preview to load local images correctly
+            const docDirUri = vscode.Uri.joinPath(document.uri, '..').toString() + '/';
+            modifiedHtml = modifiedHtml.replace(/<base\s+href="[^"]*"/i, `<base href="${docDirUri}"`);
             if (printAutoTOC) {
               const lang = config.get<string>('language', 'en');
               const tocTitle = lang === 'vi' ? 'Mục lục' : 'Table of Contents';

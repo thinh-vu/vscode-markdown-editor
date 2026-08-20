@@ -15,5 +15,11 @@ export const state = {
     lastMarkdown: '',
     currentFrontmatter: '',
     publicPathPrefix: '',
-    workspaceRoot: ''
+    workspaceRoot: '',
+    configLang: 'en'
 };
+
+const langMeta = document.querySelector('meta[name="config-lang"]');
+if (langMeta) {
+    state.configLang = langMeta.getAttribute('content') || 'en';
+}

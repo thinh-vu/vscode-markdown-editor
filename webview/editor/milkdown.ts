@@ -34,6 +34,7 @@ import { insertFootnote } from '../utils/markdown';
 import { yamlPlugin } from '../yamlPlugin';
 import { hashtagPlugin } from '../plugins/hashtag';
 import { imagePastePlugin } from '../plugins/imagePaste';
+import { searchPlugin } from '../plugins/search';
 
 const slash = slashFactory('my-slash');
 
@@ -147,8 +148,7 @@ export async function initMilkdown(initialText: string) {
             case 'ul': callCommand(wrapInBulletListCommand.key)(ctx); break;
             case 'ol': callCommand(wrapInOrderedListCommand.key)(ctx); break;
             case 'task':
-              callCommand(wrapInBulletListCommand.key)(ctx);
-              ctx.get(editorViewCtx).dispatch(ctx.get(editorViewCtx).state.tr.insertText('[ ] '));
+              insert('\n- [ ] ')(ctx);
               break;
             case 'quote': callCommand(wrapInBlockquoteCommand.key)(ctx); break;
             case 'code': callCommand(createCodeBlockCommand.key)(ctx); break;
@@ -199,7 +199,53 @@ export async function initMilkdown(initialText: string) {
         }
       });
 
-      ctx.update(prosePluginsCtx, (prev) => [...prev, admonitionPlugin, hashtagPlugin, slashPlugin, imagePastePlugin]);
+      const taskListPlugin = new Plugin({
+        key: new PluginKey('MILKDOWN_TASK_LIST'),
+        props: {
+          handleDOMEvents: {
+            mousedown: (view, event) => {
+              const target = event.target as HTMLElement;
+              if (target && target.tagName === 'LI' && target.getAttribute('data-item-type') === 'task') {
+                 const rect = target.getBoundingClientRect();
+                 // Check if click was in the pseudo-element checkbox area (left side of LI)
+                 if (event.clientX >= rect.left - 30 && event.clientX <= rect.left) {
+                    const pos = view.posAtDOM(target, 0);
+                    const $pos = view.state.doc.resolve(pos);
+                    for (let d = $pos.depth; d > 0; d--) {
+                       if ($pos.node(d).type.name === 'list_item') {
+                           const listItemPos = $pos.before(d);
+                           const listItem = $pos.node(d);
+                           const checked = listItem.attrs.checked;
+                           view.dispatch(view.state.tr.setNodeMarkup(listItemPos, undefined, { ...listItem.attrs, checked: !checked }));
+                           event.preventDefault();
+                           return true;
+                       }
+                    }
+                 }
+              }
+              return false;
+            }
+          }
+        }
+      });
+
+      const wikilinkPlugin = new Plugin({
+        key: new PluginKey('MILKDOWN_WIKILINK'),
+        props: {
+          handleTextInput(view, from, to, text) {
+            if (text === '[') {
+              const doc = view.state.doc;
+              const before = doc.textBetween(Math.max(0, from - 1), from);
+              if (before === '[') {
+                if (vscode) vscode.postMessage({ type: 'searchWikilink' });
+              }
+            }
+            return false;
+          }
+        }
+      });
+
+      ctx.update(prosePluginsCtx, (prev) => [...prev, admonitionPlugin, hashtagPlugin, slashPlugin, taskListPlugin, wikilinkPlugin, imagePastePlugin, searchPlugin]);
     })
     .config(nord)
     .use(commonmark)

@@ -191,13 +191,36 @@ export class MarkdownLiveProvider implements vscode.CustomTextEditorProvider {
     });
 
     // Receive messages from webview
-    // Receive messages from webview
+    let initialTimer: ReturnType<typeof setTimeout> | undefined;
+
     webviewPanel.webview.onDidReceiveMessage(async (e) => {
+      // When the webview signals it's ready, (re)send the initial content.
+      // The webview bundle is large (~7MB) and may take longer than the
+      // fallback timer below, so the timer alone is not reliable — the
+      // ready handshake is the primary trigger.
+      if (e?.type === 'ready' || e?.type === 'webviewReady') {
+        // Cancel the fallback so it doesn't fire later and send a
+        // redundant duplicate. If the fallback already fired before
+        // this ready message, it did nothing useful — its update was
+        // posted before the webview's script had registered a
+        // listener, so the message was lost. There is no pending
+        // timer to cancel in that case, and the resend below is
+        // still what actually delivers the content.
+        if (initialTimer) {
+          clearTimeout(initialTimer);
+          initialTimer = undefined;
+        }
+        updateWebview();
+      }
       await handleWebviewMessage(e, document, webviewPanel, this);
     });
 
-    // Wait a bit for webview to load, then send text
-    setTimeout(() => updateWebview(), 500);
+    // Fallback: wait a bit for the webview to load, then send text.
+    // Only needed if the webview never posts ready.
+    initialTimer = setTimeout(() => {
+      initialTimer = undefined;
+      updateWebview();
+    }, 1500);
   }
 
   public async updateTextDocument(document: vscode.TextDocument, newText: string) {

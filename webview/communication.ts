@@ -53,6 +53,10 @@ export function setupMessageListener() {
             setTimeout(() => {
               state.isUpdatingFromVSCode = false;
             }, 50);
+          } else {
+            // Editor not ready yet — buffer the content so it can be
+            // applied once the Milkdown editor has been created.
+            state.pendingText = message.text;
           }
         }
         break;

@@ -16,7 +16,8 @@ export const state = {
     currentFrontmatter: '',
     publicPathPrefix: '',
     workspaceRoot: '',
-    configLang: 'en'
+    configLang: 'en',
+    pendingText: null as string | null,
 };
 
 const langMeta = document.querySelector('meta[name="config-lang"]');

@@ -276,4 +276,26 @@ export async function initMilkdown(initialText: string) {
     .use(yamlPlugin);
 
   state.editor = await editor.create();
+
+  // Apply any initial content that was buffered before the editor was ready
+  if (state.pendingText != null) {
+    const pending = state.pendingText;
+    state.pendingText = null;
+    state.isUpdatingFromVSCode = true;
+    let markdownToRender = pending;
+    const match = pending.match(frontmatterRegex);
+    if (match) {
+      state.currentFrontmatter = match[0];
+      updateMetadataUI(match[1]);
+      markdownToRender = pending.slice(match[0].length);
+    } else {
+      state.currentFrontmatter = '';
+      updateMetadataUI('');
+    }
+    state.lastMarkdown = markdownToRender;
+    state.editor.action(replaceAll(markdownToRender));
+    setTimeout(() => {
+      state.isUpdatingFromVSCode = false;
+    }, 50);
+  }
 }
